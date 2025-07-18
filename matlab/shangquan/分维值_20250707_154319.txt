@@ -1,9 +1,0 @@
-{错误使用 <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('readgeoraster', 'D:\Matlab\toolbox\map\mapformats\readgeoraster.m', 63)" style="font-weight:bold">readgeoraster</a> (<a href="matlab: opentoline('D:\Matlab\toolbox\map\mapformats\readgeoraster.m',63,0)">第 63 行</a>)
-找不到或无法打开 'E:\Desktop\断层分维值\8.tif'。请检查路径和文件名或文件权限。
-
-出错 <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('FWZ', 'D:\桌面\断层分维值\断层分维值\FWZ.m', 35)" style="font-weight:bold">FWZ</a> (<a href="matlab: opentoline('D:\桌面\断层分维值\断层分维值\FWZ.m',35,0)">第 35 行</a>)
-[img, R] = readgeoraster('E:\Desktop\断层分维值\8.tif'); % 替换为你的图像路径
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-} 
-opentoline('D:\Matlab\toolbox\map\mapformats\readgeoraster.m',63,0)
-opentoline('D:\桌面\断层分维值\断层分维值\FWZ.m',35,0)
