@@ -1,0 +1,74 @@
+% clear;clc
+
+% 灰色关联分析的输入为一个n*m的矩阵。
+% 每一列是一个待评价指标， 每一行为一个待评价对象
+% S4 = input('请输入待评价元素构成的矩阵S4(行为待评价对象， 列为评价指标):');
+
+% 指标正向化
+[n, m] = size(S4);
+% 正向化
+% 待正向化的列
+col = input('请输入待正向化的列[]:');
+
+for i = 1 : size(col, 2)
+    kind = input(['请输入' num2str(col(i)) '列所属类型（1：极小型；2：中间型；3：区间型）：']);
+    % 列
+    c = col(i);
+    if kind == 1
+        S4(:, c) = trans_min(S4(:, c));
+    elseif kind == 2
+        a = input('请输入中间型的中间值：');
+        S4(:, c) = trans_mid(S4(:, c), a);
+    elseif kind == 3
+        s = input('请输入区间型的两个端点[a, b]:');
+        S4(:, c) = trans_seg(S4(:, c), s);
+    else
+        disp('输入类型有误！');
+    end
+end
+
+disp('正向化后的矩阵：');
+disp(S3);
+
+
+% 矩阵处理
+Z = S4 ./ repmat(mean(S4), n, 1);
+S3 = Z;
+% 构造虚拟母序列
+firs = repmat(max(S4, [], 2), 1, m);
+
+% 两级最小差 和 两级最大差
+S4 = abs(S4 - firs);
+a = min(S4(:));
+b = max(S4(:));
+disp('两级最小差为：');
+disp(a);
+
+disp('两级最大差为：');
+disp(b);
+
+
+p = 0.5; % p为分辨系数，通常取0.5
+% gamma 关联系数
+
+gamma = sum((a + p*b) ./ (S4 + p*b)) ./ n;
+
+% 每一列指标的关联系数为
+disp('每一列指标的关联系数为:');
+disp(gamma);
+
+% 计算权重
+wi = gamma ./ sum(gamma, 2);
+wi = repmat(wi, n, 1);
+
+% 计算权重并归一化
+score = sum(Z .* wi, 2);
+% 归一化
+score = score ./ sum(score);
+
+disp('最终得分为：');
+disp(score);
+
+[score, ind] = sort(score, 'descend');
+disp('最终排名为：');
+disp(ind);
