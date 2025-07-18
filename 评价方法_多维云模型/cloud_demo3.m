@@ -1,22 +1,22 @@
 
-%ÓÃÔ­Ê¼Êý¾Ý¼ÆËãÔÆÌØÕ÷Ex¡¢En¡¢He
+%ç”¨åŽŸå§‹æ•°æ®è®¡ç®—äº‘ç‰¹å¾Exã€Enã€He
 Ex_x = [0.7698 0.986 1.2127 1.399];
 En_x = [0.0609 0.0834 0.0677 0.0565];
 He_x = [0.01 0.01 0.01 0.01];
-%ÓÃÔ­Ê¼Êý¾Ý¼ÆËãÔÆÌØÕ÷Ex¡¢En¡¢He
+%ç”¨åŽŸå§‹æ•°æ®è®¡ç®—äº‘ç‰¹å¾Exã€Enã€He
 Ex_y = [0.00062 0.003 0.0075 0.00935];
 En_y = [0.00025 0.0013 0.0017 0.0004];
 He_y = [0.01 0.01 0.01 0.01];
-%ÔÆµÎ¸öÊý
+%äº‘æ»´ä¸ªæ•°
 n = 5000;
-%»æÍ¼
+%ç»˜å›¾
 figure(1)
 for i = 1:length(Ex_x)
     for j = 1:n
-        %¼ÆËãÒÔEnÎªÆÚÍûÖµ£¬He^2Îª·½²îµÄÕýÌ¬Ëæ»úEn'
+        %è®¡ç®—ä»¥Enä¸ºæœŸæœ›å€¼ï¼ŒHe^2ä¸ºæ–¹å·®çš„æ­£æ€éšæœºEn'
         En1_x = normrnd(En_x(i),He_x(i),1);
         En1_y = normrnd(En_y(i),He_y(i),1);
-        %¼ÆËãÒÔExÎªÆÚÍûÖµ£¬En'^2Îª·½²îµÄÕýÌ¬Ëæ»úx
+        %è®¡ç®—ä»¥Exä¸ºæœŸæœ›å€¼ï¼ŒEn'^2ä¸ºæ–¹å·®çš„æ­£æ€éšæœºx
         x(j) = normrnd(Ex_x(i),En1_x,1);
         y(j) = normrnd(Ex_y(i),En1_y,1);
         
@@ -27,7 +27,7 @@ for i = 1:length(Ex_x)
     ylim([-inf inf])
     hold on
 end
-legend({'ÕÅÈý','ÀîËÄ','ÍõÎå','ÕÔÁù'},'Location','NorthEast')
+legend({'å¼ ä¸‰','æŽå››','çŽ‹äº”','èµµå…­'},'Location','NorthEast')
 
 
 
