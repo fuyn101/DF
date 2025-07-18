@@ -114,27 +114,38 @@ a2 = model_params.a2;
 a3 = model_params.a3;
 
 [num_samples, num_indicators] = size(X);
+
+% --- 性能优化: 向量化计算 state_values ---
+% 使用逻辑索引代替双重 for 循环以提高计算效率
 state_values = zeros(num_samples, num_indicators);
 
-for i = 1:num_samples
-    for j = 1:num_indicators
-        x_val = X(i, j);
-        
-        if x_val >= 0 && x_val < d(j, 1)
-            state_values(i, j) = exp(a1 * (d(j, 1) - x_val)) + c - 1;
-        elseif x_val >= d(j, 1) && x_val < d(j, 2)
-            state_values(i, j) = c;
-        elseif x_val >= d(j, 2) && x_val < d(j, 3)
-            state_values(i, j) = exp(a2 * (x_val - d(j, 2))) + c - 1;
-        elseif x_val >= d(j, 3) && x_val <= 1
-            term1 = exp(a3 * (x_val - d(j, 3)));
-            term2 = exp(a2 * (d(j, 3) - d(j, 2)));
-            state_values(i, j) = term1 + term2 + c - 2;
-        else
-            state_values(i, j) = c;
-        end
-    end
-end
+% 将区间矩阵 d 的三列分别提取出来，并扩展为与 X 同维度的矩阵
+% repmat 兼容旧版 MATLAB，新版可直接使用隐式扩展
+d1_mat = repmat(d(:, 1)', num_samples, 1);
+d2_mat = repmat(d(:, 2)', num_samples, 1);
+d3_mat = repmat(d(:, 3)', num_samples, 1);
+
+% 根据样本值所在的区间，创建逻辑掩码 (logical masks)
+mask_punish = (X >= 0 & X < d1_mat);
+mask_neutral = (X >= d1_mat & X < d2_mat);
+mask_incentive = (X >= d2_mat & X < d3_mat);
+mask_strong_incentive = (X >= d3_mat & X <= 1);
+
+% 对所有区域的值进行一次性计算
+% 惩罚区
+state_values(mask_punish) = exp(a1 * (d1_mat(mask_punish) - X(mask_punish))) + c - 1;
+% 中性区
+state_values(mask_neutral) = c;
+% 激励区
+state_values(mask_incentive) = exp(a2 * (X(mask_incentive) - d2_mat(mask_incentive))) + c - 1;
+% 强激励区
+term1 = exp(a3 * (X(mask_strong_incentive) - d3_mat(mask_strong_incentive)));
+term2 = exp(a2 * (d3_mat(mask_strong_incentive) - d2_mat(mask_strong_incentive)));
+state_values(mask_strong_incentive) = term1 + term2 + c - 2;
+
+% 处理所有其他情况（例如，超出[0,1]范围的值），默认为中性值
+mask_other = ~(mask_punish | mask_neutral | mask_incentive | mask_strong_incentive);
+state_values(mask_other) = c;
 
 unnormalized_weights = w0 .* state_values;
 sum_weights = sum(unnormalized_weights, 2);
