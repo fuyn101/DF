@@ -57,6 +57,6 @@ plot_options = struct(...
     'YLabel', '隶属度', ...
     'Axis', [0, 1, 0, 1.2]);
 
-% 调用绘图函数
-CloudModel(all_clouds, 'plot_clouds', plot_options);
+% 调用新的独立绘图函数
+visualize_clouds(all_clouds, plot_options);
 fprintf('图表已生成。请检查新的图形窗口。\n');

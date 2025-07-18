@@ -1,4 +1,4 @@
-function [weights, gamma] = calculate_gra_weights(data, indicator_types, ro)
+function [weights, gamma] = GRA(data, indicator_types, ro)
 % calculate_gra_weights: 使用灰色关联分析法 (GRA) 计算权重
 %
 % 输入:

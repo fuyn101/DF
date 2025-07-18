@@ -5,7 +5,6 @@ function [Ex, En, He] = CloudModel(data, type, varargin)
 % 用法:
 %   [Ex, En, He] = CloudModel(data, 'calculate_parameters')
 %   similarity = CloudModel(result_cloud, 'calculate_similarity', standard_cloud)
-%   CloudModel(clouds_to_plot, 'plot_clouds', plot_options)
 %
 
 switch type
@@ -26,15 +25,8 @@ switch type
         Ex = calculate_similarity(result_cloud, standard_cloud); % 使用 Ex 作为相似度的输出
         En = []; He = []; % 未使用
         
-    case 'plot_clouds'
-        % 绘制一个或多个云
-        clouds_to_plot = data; % 在此情况下, 'data' 是云的数组
-        plot_options = varargin{1};
-        plot_clouds(clouds_to_plot, plot_options);
-        Ex = []; En = []; He = []; % 无数值输出
-        
     otherwise
-        error('指定了无效的操作类型。请使用 ''calculate_parameters'', ''calculate_similarity'', 或 ''plot_clouds''。');
+        error('指定了无效的操作类型。请使用 ''calculate_parameters'' 或 ''calculate_similarity''。');
 end
 end
 
@@ -69,52 +61,4 @@ x_r = randn(1, N) .* En_r + result_cloud.Ex;
 membership_degrees = exp(-(x_r - standard_cloud.Ex).^2 ./ (2 * standard_cloud.En^2));
 
 similarity = mean(membership_degrees);
-end
-
-function plot_clouds(clouds, options)
-% 使用指定选项绘制一个或多个云。
-% 结合了 Result.m, Standard.m 等的逻辑。
-
-figure;
-hold on;
-
-colors = 'brgcmky'; % 用于不同云的颜色
-
-for i = 1:length(clouds)
-    cloud = clouds(i);
-    N = 1000; % 云滴数
-    
-    % 生成云滴
-    Enn = randn(1, N) * cloud.He + cloud.En;
-    x = randn(1, N) .* Enn + cloud.Ex;
-    y = exp(-(x - cloud.Ex).^2 ./ (2 * Enn.^2));
-    
-    % 绘图
-    plot_color = colors(mod(i-1, length(colors)) + 1);
-    plot(x, y, '.', 'Color', plot_color);
-    
-    % 如果提供了文本标签，则添加
-    if isfield(cloud, 'Label') && ~isempty(cloud.Label)
-        text(cloud.Ex, 1.05, cloud.Label, 'HorizontalAlignment', 'center', 'FontName', 'Microsoft YaHei');
-    end
-end
-
-% 从选项设置绘图属性
-if isfield(options, 'Title')
-    title(options.Title);
-end
-if isfield(options, 'XLabel')
-    xlabel(options.XLabel);
-end
-if isfield(options, 'YLabel')
-    ylabel(options.YLabel);
-end
-if isfield(options, 'Axis')
-    axis(options.Axis);
-end
-
-set(gca, 'FontName', 'Microsoft YaHei'); % 设置字体以正确显示中文
-box on;
-grid on;
-hold off;
 end

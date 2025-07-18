@@ -36,23 +36,4 @@ end
 fprintf('--------------------------\n');
 
 %% 5. 可视化结果
-figure('Name', '熵权法计算结果');
-
-% 权重的条形图
-subplot(1, 2, 1);
-bar(weights);
-title('指标权重分布');
-xlabel('指标序号');
-ylabel('权重值');
-grid on;
-set(gca, 'XTick', 1:length(weights));
-set(gca, 'FontName', 'Microsoft YaHei'); % 设置此子图的字体
-
-% 权重的饼图
-subplot(1, 2, 2);
-% 为饼图创建标签
-labels = arrayfun(@(x) sprintf('指标 %d', x), 1:length(weights), 'UniformOutput', false);
-pie(weights, labels);
-title('权重比例');
-legend('Location', 'best');
-set(gca, 'FontName', 'Microsoft YaHei'); % 设置此子图的字体
+visualize_EWM_weights(weights);

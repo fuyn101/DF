@@ -82,7 +82,7 @@ data=[47.73	0.8432	4.87	0.784	0.941	1.4158	2.2253 	0.0929
 index = [2, 7, 8];
 
 % 3. 调用函数进行计算
-[w, Score] = CoefficientOfVariationMethod(data, index);
+[w, Score] = CoVM(data, index);
 
 % 4. 显示结果
 disp('各指标的权重为:');

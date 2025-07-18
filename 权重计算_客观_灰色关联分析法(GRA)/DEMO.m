@@ -33,7 +33,7 @@ indicator_types = [1, 1, -1, 1, 1];
 
 % --- 3. 调用函数计算权重 ---
 % 可以选择传入第三个参数作为分辨系数 ro，若不传则默认为 0.5
-[weights, gamma] = calculate_gra_weights(data, indicator_types);
+[weights, gamma] = GRA(data, indicator_types);
 
 % --- 4. 显示结果 ---
 disp('--- 灰色关联分析 (GRA) 计算结果 ---');
@@ -48,10 +48,4 @@ disp('权重之和:');
 disp(sum(weights)); % 验证权重之和为 1
 
 % --- 5. 结果可视化 ---
-figure;
-bar(weights);
-title('灰色关联分析 (GRA) - 指标权重');
-xlabel('指标序号');
-ylabel('权重值');
-grid on;
-set(gca, 'XTickLabel', sprintfc('指标 %d', 1:length(weights)));
+visualize_gra_weights(weights);

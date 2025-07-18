@@ -1,3 +1,0 @@
-shangquan.m以及CRITIC压缩包是我从别的网站下载下来的。
-剩下的是多种方式定权评价.py文件里的方法让ChatGPT改成的matlab版
-如果发现运行错误可以参考里python文件的源码修改。

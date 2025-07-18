@@ -1,5 +1,5 @@
-function [w, Score] = CoefficientOfVariationMethod(data, index)
-% CoefficientOfVariationMethod: 使用变异系数法计算权重和得分
+function [w, Score] = CoVM(data, index)
+% CoVM: 使用变异系数法计算权重和得分
 %
 % 输入:
 %   data  - 原始数据矩阵 (m x n, m个样本, n个指标)
