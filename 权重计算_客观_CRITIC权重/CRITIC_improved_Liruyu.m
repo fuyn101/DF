@@ -1,4 +1,4 @@
-function [weights, scores, normalized_data] = CRITIC_improved(data, indicator_types)
+function [weights, scores, normalized_data] = CRITIC_improved_Liruyu(data, indicator_types)
 %improvedCRITIC 使用一种改良的CRITIC方法计算客观权重
 %   该函数实现了一种CRITIC方法的变体。与标准CRITIC方法使用“冲突性之和”
 %   (sum of 1-r)来量化冲突性不同，本方法使用“1减去平均相关系数”

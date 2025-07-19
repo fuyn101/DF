@@ -134,7 +134,7 @@ disp(sorted_idx_std');
 
 % ================== 2. 调用改进CRITIC方法 ==================
 fprintf('\n--- 正在运行改进CRITIC方法 ---\n');
-[weights_imp, scores_imp] = CRITIC_improved(decision_matrix, indicator_types);
+[weights_imp, scores_imp] = CRITIC_improved_Liruyu(decision_matrix, indicator_types);
 
 % 显示改进方法的结果
 disp('改进CRITIC方法计算出的权重:');
