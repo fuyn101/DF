@@ -140,6 +140,6 @@ def create_geotiff_from_fault_data(csv_dir, output_tiff, resolution=1.0, buffer=
 
 
 if __name__ == "__main__":
-    CSV_DIRECTORY = "新的断层数据"
+    CSV_DIRECTORY = "提取"
     OUTPUT_TIFF_FILE = "faults_georef.tif"
     create_geotiff_from_fault_data(CSV_DIRECTORY, OUTPUT_TIFF_FILE)

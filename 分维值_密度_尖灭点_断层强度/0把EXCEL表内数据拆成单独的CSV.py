@@ -1,6 +1,12 @@
 import pandas as pd
 import os
 import random
+import re
+
+
+def sanitize_filename(name):
+    """通过替换无效字符来清理字符串，使其成为有效的文件名。"""
+    return re.sub(r'[\\/*?:"<>|°~]', "_", name)
 
 
 def excel_to_csv(excel_file_path, output_dir):
@@ -35,8 +41,9 @@ def excel_to_csv(excel_file_path, output_dir):
             df = pd.read_excel(xls, sheet_name=sheet_name)
 
             # 为CSV创建一个有效的文件名
+            sanitized_sheet_name = sanitize_filename(sheet_name)
             random_suffix = random.randint(1000, 9999)
-            csv_file_name = f"{base_name}_{sheet_name}_{random_suffix}.csv"
+            csv_file_name = f"{base_name}_{sanitized_sheet_name}_{random_suffix}.csv"
             csv_file_path = os.path.join(output_dir, csv_file_name)
 
             # 使用UTF-8编码将DataFrame保存为CSV文件，以防止乱码
